@@ -32,6 +32,8 @@ const Blogs = (): JSX.Element => {
         <h3>{`${blog.owner.name}:`}</h3>
         <img src={blog.photo} alt={`${blog.id}'s photo`} />
         <p>{blog.content}</p>
+        <p>{blog.likeReceived.length}</p>
+        <p>{`${blog.commentReceived[0]?.owner.name} : ${blog.commentReceived[0]?.content}`}</p>
       </div>
       )}
     </main>
