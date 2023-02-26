@@ -20,3 +20,12 @@ export interface User {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface Blog {
+  content: string;
+  photo?: string;
+  ownerId: { id: number }
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+}
