@@ -25,15 +25,16 @@ const Blogs = (): JSX.Element => {
   if(!blogs.length) return <p>No blogs yet</p>
 
   return (
-    <>
+    <main>
       {/* <h1>Hello. This is a list of all the blogs.</h1> */}
       {blogs.map((blog: Blog) =>
-      <div>
+      <div key={blog.id}>
+        <h3>{`${blog.owner.name}:`}</h3>
         <img src={blog.photo} alt={`${blog.id}'s photo`} />
-        <p key={blog.id}>{blog.content}</p>
+        <p>{blog.content}</p>
       </div>
       )}
-    </>
+    </main>
   )
 }
  

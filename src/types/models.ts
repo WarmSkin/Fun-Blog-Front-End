@@ -26,6 +26,7 @@ export interface Blog {
   photo?: string;
   ownerId: { id: number }
   id: number;
+  owner: Profile;
   createdAt: string;
   updatedAt: string;
 }

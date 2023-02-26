@@ -25,7 +25,7 @@ const Profiles = (): JSX.Element => {
   if(!profiles.length) return <p>No profiles yet</p>
 
   return (
-    <>
+    <main>
       {/* <h1>Hello. This is a list of all the profiles.</h1> */}
       {profiles.map((profile: Profile) =>
       <div>
@@ -33,7 +33,7 @@ const Profiles = (): JSX.Element => {
         <p key={profile.id}>{profile.name}</p>
       </div>
       )}
-    </>
+    </main>
   )
 }
  
