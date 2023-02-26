@@ -26,9 +26,12 @@ const Profiles = (): JSX.Element => {
 
   return (
     <>
-      <h1>Hello. This is a list of all the profiles.</h1>
+      {/* <h1>Hello. This is a list of all the profiles.</h1> */}
       {profiles.map((profile: Profile) =>
+      <div>
+        <img src={profile.photo} alt={`${profile.name}'s photo`} />
         <p key={profile.id}>{profile.name}</p>
+      </div>
       )}
     </>
   )
