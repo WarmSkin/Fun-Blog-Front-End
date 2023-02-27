@@ -64,7 +64,7 @@ function App(): JSX.Element {
           path="/blogs"
           element={
             <ProtectedRoute user={user}>
-              <Blogs user={user}/>
+              {user && <Blogs user={user}/>}
             </ProtectedRoute>
           }
         />
