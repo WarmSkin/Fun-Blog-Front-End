@@ -13,7 +13,7 @@ import { NewBlogFormData, PhotoFormData } from '../../types/forms'
 import { handleErrMsg } from '../../types/validators'
 
 interface NewBlogProps {
-  updateMessage: () => void;
+  updateMessage: (msg: string) => void;
 }
 
 const NewBlogForm = (props:NewBlogProps): JSX.Element => {

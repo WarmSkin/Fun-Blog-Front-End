@@ -8,6 +8,7 @@ import NewBlogForm from '../../components/NewBlogForm/NewBlogForm'
 import styles from './NewBlog.module.css'
 
 
+
 const NewBlogPage = (): JSX.Element => {
   const [message, setMessage] = useState('')
 
