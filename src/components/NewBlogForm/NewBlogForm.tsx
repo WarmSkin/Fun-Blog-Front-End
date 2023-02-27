@@ -12,8 +12,13 @@ import styles from './NewBlogForm.module.css'
 import { NewBlogFormData, PhotoFormData } from '../../types/forms'
 import { handleErrMsg } from '../../types/validators'
 
-const NewBlogForm = ({updateMessage}): JSX.Element => {
+interface NewBlogProps {
+  updateMessage: () => void;
+}
+
+const NewBlogForm = (props:NewBlogProps): JSX.Element => {
   const navigate = useNavigate()
+  const {updateMessage} = props
 
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [formData, setFormData] = useState<NewBlogFormData>({
