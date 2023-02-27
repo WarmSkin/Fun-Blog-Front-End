@@ -25,3 +25,7 @@ export interface ChangePasswordFormData {
 export interface PhotoFormData {
   photo: File | null;
 }
+
+export interface NewBlogFormData {
+  content: string;
+}

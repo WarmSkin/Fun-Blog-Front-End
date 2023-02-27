@@ -8,6 +8,7 @@ import Login from './pages/Login/Login'
 import Landing from './pages/Landing/Landing'
 import Profiles from './pages/Profiles/Profiles'
 import Blogs from './pages/Blogs/Blogs'
+import NewBlog from './pages/NewBlog/NewBlog'
 import ChangePassword from './pages/ChangePassword/ChangePassword'
 
 // components
@@ -64,6 +65,14 @@ function App(): JSX.Element {
           element={
             <ProtectedRoute user={user}>
               <Blogs />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/new-blog"
+          element={
+            <ProtectedRoute user={user}>
+              <NewBlog />
             </ProtectedRoute>
           }
         />

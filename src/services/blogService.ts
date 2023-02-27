@@ -2,6 +2,10 @@
 import * as tokenService from './tokenService'
 
 // types
+import { 
+  NewBlogFormData,
+  PhotoFormData
+} from '../types/forms'
 import { Blog } from '../types/models'
 
 const BASE_URL = `${import.meta.env.VITE_BACK_END_SERVER_URL}/api/blogs`
@@ -25,7 +29,7 @@ async function addPhoto(
     const res = await fetch(`${BASE_URL}/${blogId}/add-photo`, {
       method: 'PUT',
       headers: {
-        'Authorization': `Bearer ${tokenService.getToken()}`
+        'Authorization': `Bearer ${tokenService.getToken()}`,
       },
       body: photoData
     })
@@ -35,4 +39,30 @@ async function addPhoto(
   }
 }
 
-export { getAllBlogs, addPhoto }
+async function newBlog(
+  formData: NewBlogFormData, 
+  photoFormData: PhotoFormData,
+): Promise<Blog> {
+  try {
+    const res = await fetch(`${BASE_URL}`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${tokenService.getToken()}`, 
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData),
+    })
+    const blog = await res.json()
+    console.log(photoFormData)
+    if (photoFormData.photo) {
+      const photoData = new FormData()
+      photoData.append('photo', photoFormData.photo)
+      blog.photo = await addPhoto(photoData, blog.id)
+    }
+    return blog as Blog
+  } catch (error) {
+    throw error
+  }
+}
+
+export { getAllBlogs, addPhoto, newBlog, }

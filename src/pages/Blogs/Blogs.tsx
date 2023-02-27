@@ -26,15 +26,24 @@ const Blogs = (): JSX.Element => {
 
   return (
     <main>
-      {/* <h1>Hello. This is a list of all the blogs.</h1> */}
       {blogs.map((blog: Blog) =>
-      <div key={blog.id}>
+      <article key={blog.id}>
         <h3>{`${blog.owner.name}:`}</h3>
         <img src={blog.photo} alt={`${blog.id}'s photo`} />
         <p>{blog.content}</p>
-        <p>{blog.likeReceived.length}</p>
-        <p>{`${blog.commentReceived[0]?.owner.name} : ${blog.commentReceived[0]?.content}`}</p>
-      </div>
+        {
+          blog.likeReceived.length?
+            <p>Likes: {blog.likeReceived.length}</p>
+          :
+            <p>You will be the first one likes on this!</p>
+        }
+        {
+          blog.commentReceived.length?
+            <p>{`${blog.commentReceived[0]?.owner.name} : ${blog.commentReceived[0]?.content}`}</p>
+          :
+            <p>You will be the first one comments on this!</p> 
+        }
+      </article>
       )}
     </main>
   )
