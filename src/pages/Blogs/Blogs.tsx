@@ -1,13 +1,13 @@
 // npm packages
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useReducer } from 'react'
 
 // services
 import * as blogService from '../../services/blogService'
 
 // types
-import { Blog } from '../../types/models'
+import { Blog, User } from '../../types/models'
 
-const Blogs = (): JSX.Element => {
+const Blogs = ({user}): JSX.Element => {
   const [blogs, setBlogs] = useState<Blog[]>([])
 
   useEffect((): void => {
@@ -22,13 +22,27 @@ const Blogs = (): JSX.Element => {
     fetchBlogs()
   }, [])
 
+  // const handleDeleteBlog = async (evt: React.FormEvent): Promise<void> => {
+  //   evt.preventDefault()
+  //   try {
+  //     await blogService.deleteBlog(blogId)
+  //     navigate('/blogs')
+  //   } catch (err) {
+  //     console.log(err)
+  //     throw err
+  //   }
+  // }
+
   if(!blogs.length) return <p>No blogs yet</p>
 
   return (
     <main>
       {blogs.map((blog: Blog) =>
       <article key={blog.id}>
-        <h3>{`${blog.owner.name}:`}</h3>
+        <div className='blog-header'>
+          <h3>{`${blog.owner.name}:`}</h3>
+          {blog.owner.id === user.profile.id? "X" : ""}
+        </div>
         <img src={blog.photo} alt={`${blog.id}'s photo`} />
         <p>{blog.content}</p>
         {

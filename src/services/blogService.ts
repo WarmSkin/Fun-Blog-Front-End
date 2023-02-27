@@ -65,4 +65,17 @@ async function newBlog(
   }
 }
 
-export { getAllBlogs, addPhoto, newBlog, }
+async function deleteBlog(blogId: number): Promise<void> {
+  try {
+    const res = await fetch(`${BASE_URL}/${blogId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${tokenService.getToken()}`,
+      },
+    })
+  } catch (error) {
+    throw error
+  }
+}
+
+export { getAllBlogs, addPhoto, newBlog, deleteBlog }

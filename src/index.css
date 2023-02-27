@@ -18,11 +18,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-family: sofia-pro, sans-serif;
   --primary: #F2B138;
-  --secondary: #6574d0;
+  --secondary: #D7E8BA;
   --outline: #ffffff;
-  --background: lightblue;
+  --background: #2E5077;
   --border: rgb(220, 220, 220);
-  --card-background: rgb(0, 180, 180);
+  --card-background: #4DA1A9;
 }
 
 code {
@@ -183,7 +183,7 @@ nav {
   position: fixed;
   padding: 12px 20px;
   align-items: center;
-  background: lightcoral;
+  background: #4DA1A9;
   border-bottom: 1px solid rgb(200, 200, 200);
 }
 
