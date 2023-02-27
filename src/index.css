@@ -20,7 +20,7 @@ body {
   --primary: #F2B138;
   --secondary: #6574d0;
   --outline: #ffffff;
-  --background: #f2f4f8;
+  --background: lightblue;
   --border: rgb(220, 220, 220);
   --card-background: rgb(0, 180, 180);
 }
@@ -183,7 +183,7 @@ nav {
   position: fixed;
   padding: 12px 20px;
   align-items: center;
-  /* background: white; */
+  background: lightcoral;
   border-bottom: 1px solid rgb(200, 200, 200);
 }
 
