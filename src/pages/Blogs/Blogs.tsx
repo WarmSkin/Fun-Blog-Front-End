@@ -6,10 +6,13 @@ import * as blogService from '../../services/blogService'
 
 // types
 import { Blog, User } from '../../types/models'
+interface BlogsPageProps {
+  user:User;
+}
 
-const Blogs = ({user}): JSX.Element => {
+const Blogs = (props:BlogsPageProps): JSX.Element => {
   const [blogs, setBlogs] = useState<Blog[]>([])
-
+  const {user} = props
   useEffect((): void => {
     const fetchBlogs = async (): Promise<void> => {
       try {
