@@ -7,7 +7,7 @@ import {
   PhotoFormData,
   CommentFormData
 } from '../types/forms'
-import { Blog, Comment } from '../types/models'
+import { Blog, Comment, Like } from '../types/models'
 
 const BASE_URL = `${import.meta.env.VITE_BACK_END_SERVER_URL}/api/blogs`
 
@@ -78,14 +78,15 @@ async function deleteBlog(blogId: number): Promise<void> {
   }
 }
 
-async function giveLike(blogId: number): Promise<void> {
+async function giveLike(blogId: number): Promise<Like> {
   try {
-    await fetch(`${BASE_URL}/${blogId}/like`, {
+    const res =await fetch(`${BASE_URL}/${blogId}/like`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${tokenService.getToken()}`,
       },
     })
+    return await res.json()
   } catch (error) {
     throw error
   }

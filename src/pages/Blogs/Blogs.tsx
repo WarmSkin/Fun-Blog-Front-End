@@ -45,18 +45,30 @@ const Blogs = (props:BlogsPageProps): JSX.Element => {
     }
   }
 
-  const handleGiveLike = async (blogId: number): Promise<void> => {
+  const handleGiveLike = async (blog: Blog, blogId: number): Promise<void> => {
     try {
-      await blogService.giveLike(blogId)
+      const newLike = await blogService.giveLike(blogId)
+      setBlogs(blogs.map(blogS => {
+        if(blogS.id === blog.id)
+          blogS.likeReceived.push(newLike)
+        return blogS
+      }))
     } catch (err) {
       console.log(err)
       throw err
     }
   }
 
-  const handleRemoveLike = async (likeId: number): Promise<void> => {
+  const handleRemoveLike = async (blog: Blog, likeId: number): Promise<void> => {
     try {
       await blogService.removeLike(likeId)
+      setBlogs(blogs.map(blogS => {
+        if(blogS.id === blog.id){
+          const index = blogS.likeReceived.findIndex(like => like.id === likeId)
+          blogS.likeReceived.splice(index, 1)
+        }
+        return blogS
+      }))
     } catch (err) {
       console.log(err)
       throw err
@@ -104,18 +116,18 @@ const Blogs = (props:BlogsPageProps): JSX.Element => {
             <>
               {blog.likeReceived.find(like => like.profileId === user.profile.id)?
               <>
-              <button onClick={()=>handleRemoveLike(
+              <button onClick={()=>handleRemoveLike(blog,
                 blog.likeReceived.find(like => like.profileId === user.profile.id)!.id
                 )}>
                   {blog.likeReceived.length} 💗
               </button>
               </>
               :
-              <button onClick={()=>handleGiveLike(blog.id)}>{blog.likeReceived.length} 💗</button> 
+              <button onClick={()=>handleGiveLike(blog, blog.id)}>{blog.likeReceived.length} 💗</button> 
               }
             </>
           :
-            <button onClick={()=>handleGiveLike(blog.id)}>💗</button> 
+            <button onClick={()=>handleGiveLike(blog, blog.id)}>💗</button> 
         }
         {
           blog.commentReceived.length?
