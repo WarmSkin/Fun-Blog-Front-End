@@ -54,6 +54,13 @@ const UpdateBlogForm = (props:UpdateBlogProps): JSX.Element => {
     }
   }
 
+  const handleCancel = async (evt: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
+    evt.preventDefault()
+    details.removeAttribute("open")
+    setPhotoData({photo: null})
+    setFormData({content: blog.content})
+  }
+
   const { content } = formData
 
   const isFormInvalid = (): boolean => {
@@ -96,7 +103,7 @@ const UpdateBlogForm = (props:UpdateBlogProps): JSX.Element => {
         >
           {!isSubmitted ? "Update" : "🚀 Sending..."}
         </button>
-          <button onClick={(event)=> {event.preventDefault(); details.removeAttribute("open")}}>Cancel</button>
+          <button onClick={handleCancel}>Cancel</button>
       </div>
     </form>
   )
