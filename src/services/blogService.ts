@@ -90,6 +90,18 @@ async function giveLike(blogId: number): Promise<void> {
   }
 }
 
+async function removeLike(likeId: number): Promise<void> {
+  try {
+    await fetch(`${BASE_URL}/${likeId}/like`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${tokenService.getToken()}`,
+      },
+    })
+  } catch (error) {
+    throw error
+  }
+}
 
 async function updateBlog(
   formData: BlogFormData, 
@@ -117,4 +129,4 @@ async function updateBlog(
   }
 }
 
-export { getAllBlogs, addPhoto, newBlog, deleteBlog, updateBlog, giveLike }
+export { getAllBlogs, addPhoto, newBlog, deleteBlog, updateBlog, giveLike, removeLike }

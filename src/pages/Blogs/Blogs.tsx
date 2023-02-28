@@ -9,7 +9,7 @@ import * as blogService from '../../services/blogService'
 import UpdateBlogForm from '../../components/UpdateBlogForm/UpdateBlogForm'
 
 // types
-import { Blog, User } from '../../types/models'
+import { Blog, User, Like } from '../../types/models'
 interface BlogsPageProps {
   user:User;
 }
@@ -53,6 +53,15 @@ const Blogs = (props:BlogsPageProps): JSX.Element => {
     }
   }
 
+  const handleRemoveLike = async (likeId: number): Promise<void> => {
+    try {
+      await blogService.removeLike(likeId)
+    } catch (err) {
+      console.log(err)
+      throw err
+    }
+  }
+  
   if(!blogs.length) return <p>No blogs yet</p>
 
   return (
@@ -77,7 +86,19 @@ const Blogs = (props:BlogsPageProps): JSX.Element => {
         <p>{blog.content}</p>
         {
           blog.likeReceived.length?
-            <button>{blog.likeReceived.length} 💗</button>
+            <>
+              {blog.likeReceived.find(like => like.profileId === user.profile.id)?
+              <>
+              <button onClick={()=>handleRemoveLike(
+                blog.likeReceived.find(like => like.profileId === user.profile.id)!.id
+                )}>
+                  {blog.likeReceived.length} 💗
+              </button>
+              </>
+              :
+              <button onClick={()=>handleGiveLike(blog.id)}>{blog.likeReceived.length} 💗</button> 
+              }
+            </>
           :
             <button onClick={()=>handleGiveLike(blog.id)}>💗</button> 
         }

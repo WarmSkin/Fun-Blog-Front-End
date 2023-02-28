@@ -24,7 +24,7 @@ export interface User {
 export interface Blog {
   content: string;
   photo?: string;
-  ownerId: { id: number };
+  ownerId: number;
   id: number;
   owner: Profile;
   likeReceived: Like[];
@@ -34,8 +34,8 @@ export interface Blog {
 }
 
 export interface Like {
-  profileId: { id: number };
-  blogId: { id: number };
+  profileId: number;
+  blogId: number;
   id: number;
   owner: Profile;
   createdAt: string;
@@ -43,8 +43,8 @@ export interface Like {
 }
 
 export interface Comment {
-  profileId: { id: number };
-  blogId: { id: number };
+  profileId: number;
+  blogId: number;
   content: string;
   owner: Profile;
   id: number;
