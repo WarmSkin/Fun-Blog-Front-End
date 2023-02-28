@@ -66,7 +66,7 @@ async function newBlog(
 
 async function deleteBlog(blogId: number): Promise<void> {
   try {
-    const res = await fetch(`${BASE_URL}/${blogId}`, {
+    await fetch(`${BASE_URL}/${blogId}`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${tokenService.getToken()}`,
@@ -76,6 +76,20 @@ async function deleteBlog(blogId: number): Promise<void> {
     throw error
   }
 }
+
+async function giveLike(blogId: number): Promise<void> {
+  try {
+    await fetch(`${BASE_URL}/${blogId}/like`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${tokenService.getToken()}`,
+      },
+    })
+  } catch (error) {
+    throw error
+  }
+}
+
 
 async function updateBlog(
   formData: BlogFormData, 
@@ -103,4 +117,4 @@ async function updateBlog(
   }
 }
 
-export { getAllBlogs, addPhoto, newBlog, deleteBlog, updateBlog }
+export { getAllBlogs, addPhoto, newBlog, deleteBlog, updateBlog, giveLike }

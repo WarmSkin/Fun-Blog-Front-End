@@ -44,6 +44,15 @@ const Blogs = (props:BlogsPageProps): JSX.Element => {
     }
   }
 
+  const handleGiveLike = async (blogId: number): Promise<void> => {
+    try {
+      await blogService.giveLike(blogId)
+    } catch (err) {
+      console.log(err)
+      throw err
+    }
+  }
+
   if(!blogs.length) return <p>No blogs yet</p>
 
   return (
@@ -68,9 +77,9 @@ const Blogs = (props:BlogsPageProps): JSX.Element => {
         <p>{blog.content}</p>
         {
           blog.likeReceived.length?
-            <p>Likes: {blog.likeReceived.length}</p>
+            <button>{blog.likeReceived.length} 💗</button>
           :
-            <p>You will be the first one likes on this!</p>
+            <button onClick={()=>handleGiveLike(blog.id)}>💗</button> 
         }
         {
           blog.commentReceived.length?
