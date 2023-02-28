@@ -29,3 +29,7 @@ export interface PhotoFormData {
 export interface BlogFormData {
   content: string;
 }
+
+export interface CommentFormData {
+  content: string;
+}

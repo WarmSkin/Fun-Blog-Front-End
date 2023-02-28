@@ -4,9 +4,10 @@ import * as tokenService from './tokenService'
 // types
 import { 
   BlogFormData,
-  PhotoFormData
+  PhotoFormData,
+  CommentFormData
 } from '../types/forms'
-import { Blog } from '../types/models'
+import { Blog, Comment } from '../types/models'
 
 const BASE_URL = `${import.meta.env.VITE_BACK_END_SERVER_URL}/api/blogs`
 
@@ -129,4 +130,46 @@ async function updateBlog(
   }
 }
 
-export { getAllBlogs, addPhoto, newBlog, deleteBlog, updateBlog, giveLike, removeLike }
+async function leaveComment(
+    formData: CommentFormData, 
+    blogId: number,
+  ): Promise<Comment> {
+  try {
+    const res = await fetch(`${BASE_URL}/${blogId}/comment`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${tokenService.getToken()}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData),
+    })
+    return await res.json()
+  } catch (error) {
+    throw error
+  }
+}
+
+async function deleteComment(commentId: number): Promise<void> {
+  try {
+    await fetch(`${BASE_URL}/${commentId}/comment`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${tokenService.getToken()}`,
+      },
+    })
+  } catch (error) {
+    throw error
+  }
+}
+
+export {
+  getAllBlogs,
+  addPhoto, 
+  newBlog, 
+  deleteBlog, 
+  updateBlog, 
+  giveLike, 
+  removeLike, 
+  leaveComment, 
+  deleteComment,
+}

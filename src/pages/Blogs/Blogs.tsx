@@ -7,9 +7,10 @@ import * as blogService from '../../services/blogService'
 
 // components
 import UpdateBlogForm from '../../components/UpdateBlogForm/UpdateBlogForm'
+import AddCommentForm from '../../components/AddCommentForm/AddCommentForm'
 
 // types
-import { Blog, User, Like } from '../../types/models'
+import { Blog, User } from '../../types/models'
 interface BlogsPageProps {
   user:User;
 }
@@ -104,9 +105,23 @@ const Blogs = (props:BlogsPageProps): JSX.Element => {
         }
         {
           blog.commentReceived.length?
-            <p>{`${blog.commentReceived[0]?.owner.name} : ${blog.commentReceived[0]?.content}`}</p>
+          <>
+            {blog.commentReceived.map(comment =>
+            <p>{`${comment.owner.name} : ${comment.content}`}</p>  
+              )}
+              <details id={`comment-${blog.id}`}>
+                <summary>Add Comment</summary>
+                <AddCommentForm blog={blog} blogs={blogs} setBlogs={setBlogs}/>
+              </details>
+          </>
           :
-            <p>You will be the first one comments on this!</p> 
+          <>
+            <p>You will be the first one comments on this!</p>
+            <details id={`comment-${blog.id}`}>
+                <summary>Add Comment</summary>
+                <AddCommentForm blog={blog} blogs={blogs} setBlogs={setBlogs}/>
+            </details>
+          </>
         }
       </article>
       )}
