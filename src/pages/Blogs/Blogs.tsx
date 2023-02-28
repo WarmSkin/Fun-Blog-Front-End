@@ -62,6 +62,20 @@ const Blogs = (props:BlogsPageProps): JSX.Element => {
       throw err
     }
   }
+
+  const handleDeleteComment = async (blog: Blog,commentId: number, index: number): Promise<void> => {
+    try {
+      await blogService.deleteComment(commentId)
+      setBlogs(blogs.map(blogS => {
+        if(blogS.id === blog.id)
+          blogS.commentReceived.splice(index, 1)
+        return blogS
+      }))
+    } catch (err) {
+      console.log(err)
+      throw err
+    }
+  }
   
   if(!blogs.length) return <p>No blogs yet</p>
 
@@ -106,8 +120,17 @@ const Blogs = (props:BlogsPageProps): JSX.Element => {
         {
           blog.commentReceived.length?
           <>
-            {blog.commentReceived.map(comment =>
-            <p>{`${comment.owner.name} : ${comment.content}`}</p>  
+            {blog.commentReceived.map((comment,index) =>
+            <>
+            <p>
+              {`${comment.owner.name} : ${comment.content}`}
+              {comment.owner.id === user.profile.id?
+                <button onClick={()=>handleDeleteComment(blog, comment.id, index)}>X</button>
+              :
+                ""
+              }
+            </p> 
+            </>
               )}
               <details id={`comment-${blog.id}`}>
                 <summary>Add Comment</summary>
