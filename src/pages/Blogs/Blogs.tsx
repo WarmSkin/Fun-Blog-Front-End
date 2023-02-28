@@ -1,5 +1,6 @@
 // npm packages
-import { useState, useEffect, useReducer } from 'react'
+import { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
 // services
 import * as blogService from '../../services/blogService'
@@ -12,6 +13,8 @@ interface BlogsPageProps {
 
 const Blogs = (props:BlogsPageProps): JSX.Element => {
   const [blogs, setBlogs] = useState<Blog[]>([])
+  const navigate = useNavigate()
+
   const {user} = props
   useEffect((): void => {
     const fetchBlogs = async (): Promise<void> => {
@@ -25,16 +28,18 @@ const Blogs = (props:BlogsPageProps): JSX.Element => {
     fetchBlogs()
   }, [])
 
-  // const handleDeleteBlog = async (evt: React.FormEvent): Promise<void> => {
-  //   evt.preventDefault()
-  //   try {
-  //     await blogService.deleteBlog(blogId)
-  //     navigate('/blogs')
-  //   } catch (err) {
-  //     console.log(err)
-  //     throw err
-  //   }
-  // }
+  const handleDeleteBlog = async (blogId: number): Promise<void> => {
+    try {
+      await blogService.deleteBlog(blogId)
+      setBlogs(blogs.filter(blog => 
+        blog.id !== blogId
+      ))
+      navigate('/blogs')
+    } catch (err) {
+      console.log(err)
+      throw err
+    }
+  }
 
   if(!blogs.length) return <p>No blogs yet</p>
 
@@ -44,7 +49,11 @@ const Blogs = (props:BlogsPageProps): JSX.Element => {
       <article key={blog.id}>
         <div className='blog-header'>
           <h3>{`${blog.owner.name}:`}</h3>
-          {blog.owner.id === user.profile.id? "X" : ""}
+          {blog.owner.id === user.profile.id?
+          <button onClick={()=>handleDeleteBlog(blog.id)}>X</button>
+          : 
+          ""
+          }
         </div>
         <img src={blog.photo} alt={`${blog.id}'s photo`} />
         <p>{blog.content}</p>
