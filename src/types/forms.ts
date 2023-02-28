@@ -26,6 +26,6 @@ export interface PhotoFormData {
   photo: File | null;
 }
 
-export interface NewBlogFormData {
+export interface BlogFormData {
   content: string;
 }

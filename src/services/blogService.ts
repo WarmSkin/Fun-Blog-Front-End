@@ -3,7 +3,7 @@ import * as tokenService from './tokenService'
 
 // types
 import { 
-  NewBlogFormData,
+  BlogFormData,
   PhotoFormData
 } from '../types/forms'
 import { Blog } from '../types/models'
@@ -40,7 +40,7 @@ async function addPhoto(
 }
 
 async function newBlog(
-  formData: NewBlogFormData, 
+  formData: BlogFormData, 
   photoFormData: PhotoFormData,
 ): Promise<Blog> {
   try {
@@ -53,7 +53,6 @@ async function newBlog(
       body: JSON.stringify(formData),
     })
     const blog = await res.json()
-    console.log(photoFormData)
     if (photoFormData.photo) {
       const photoData = new FormData()
       photoData.append('photo', photoFormData.photo)
@@ -78,4 +77,30 @@ async function deleteBlog(blogId: number): Promise<void> {
   }
 }
 
-export { getAllBlogs, addPhoto, newBlog, deleteBlog }
+async function updateBlog(
+  formData: BlogFormData, 
+  photoFormData: PhotoFormData,
+  blogId: number,
+): Promise<Blog> {
+  try {
+    const res = await fetch(`${BASE_URL}/${blogId}`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${tokenService.getToken()}`, 
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData),
+    })
+    const blog = await res.json()
+    if (photoFormData.photo) {
+      const photoData = new FormData()
+      photoData.append('photo', photoFormData.photo)
+      blog.photo = await addPhoto(photoData, blog.id)
+    }
+    return blog as Blog
+  } catch (error) {
+    throw error
+  }
+}
+
+export { getAllBlogs, addPhoto, newBlog, deleteBlog, updateBlog }

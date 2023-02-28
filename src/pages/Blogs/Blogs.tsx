@@ -1,9 +1,12 @@
 // npm packages
 import { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 // services
 import * as blogService from '../../services/blogService'
+
+// components
+import UpdateBlogForm from '../../components/UpdateBlogForm/UpdateBlogForm'
 
 // types
 import { Blog, User } from '../../types/models'
@@ -50,7 +53,13 @@ const Blogs = (props:BlogsPageProps): JSX.Element => {
         <div className='blog-header'>
           <h3>{`${blog.owner.name}:`}</h3>
           {blog.owner.id === user.profile.id?
-          <button onClick={()=>handleDeleteBlog(blog.id)}>X</button>
+          <>
+            <button onClick={()=>handleDeleteBlog(blog.id)}>X</button>
+            <details id={`update-${blog.id}`}>
+              <summary>Edit</summary>
+              <UpdateBlogForm blog={blog} blogs={blogs} setBlogs={setBlogs}/>
+            </details>
+          </>
           : 
           ""
           }

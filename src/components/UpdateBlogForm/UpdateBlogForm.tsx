@@ -1,35 +1,37 @@
 // npm modules
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
 
 // services
 import * as blogService from '../../services/blogService'
 
 // stylesheets
-import styles from './NewBlogForm.module.css'
+import styles from './UpdateBlogForm.module.css'
 
 // types
 import { BlogFormData, PhotoFormData } from '../../types/forms'
-import { handleErrMsg } from '../../types/validators'
+import { Blog } from '../../types/models'
 
-interface NewBlogProps {
-  updateMessage: (msg: string) => void;
+interface UpdateBlogProps {
+  blog: Blog;
+  blogs: Blog[];
+  setBlogs: React.Dispatch<React.SetStateAction<Blog[]>>;
 }
 
-const NewBlogForm = (props:NewBlogProps): JSX.Element => {
-  const navigate = useNavigate()
-  const {updateMessage} = props
+
+const UpdateBlogForm = (props:UpdateBlogProps): JSX.Element => {
+  const {blog, blogs, setBlogs} = props
+  
+  const details = document.getElementById(`update-${blog.id}`)!
 
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [formData, setFormData] = useState<BlogFormData>({
-    content: '',
+    content: blog.content,
   })
   const [photoData, setPhotoData] = useState<PhotoFormData>({
     photo: null
   })
 
   const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    updateMessage('')
     setFormData({ ...formData, [evt.target.name]: evt.target.value })
   }
 
@@ -42,11 +44,12 @@ const NewBlogForm = (props:NewBlogProps): JSX.Element => {
     if(isSubmitted) return
     try {
       setIsSubmitted(true)
-      await blogService.newBlog(formData, photoData)
-      navigate('/blogs')
+      const newBlog = await blogService.updateBlog(formData, photoData, blog.id)
+      setBlogs([newBlog,...blogs.filter(blog => blog.id !== newBlog.id)])
+      details.removeAttribute("open")
+      setIsSubmitted(false)
     } catch (err) {
       console.log(err)
-      handleErrMsg(err, updateMessage)
       setIsSubmitted(false)
     }
   }
@@ -75,8 +78,9 @@ const NewBlogForm = (props:NewBlogProps): JSX.Element => {
       </div>
       
       <div className={styles.inputContainer}>
+        <img src={blog.photo} alt="This blog's photo" />
         <label htmlFor="photo-upload" className={styles.label}>
-          Upload Photo
+          Change Photo
         </label>
         <input
           type="file"
@@ -90,14 +94,12 @@ const NewBlogForm = (props:NewBlogProps): JSX.Element => {
           disabled={isFormInvalid() || isSubmitted} 
           className={styles.button}
         >
-          {!isSubmitted ? "Create" : "🚀 Sending..."}
+          {!isSubmitted ? "Update" : "🚀 Sending..."}
         </button>
-        <Link to="/blogs">
-          <button>Cancel</button>
-        </Link>
+          <button onClick={(event)=> {event.preventDefault(); details.removeAttribute("open")}}>Cancel</button>
       </div>
     </form>
   )
 }
 
-export default NewBlogForm
+export default UpdateBlogForm
