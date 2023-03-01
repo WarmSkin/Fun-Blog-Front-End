@@ -157,9 +157,9 @@ const Blogs = (props:BlogsPageProps): JSX.Element => {
                     </section>
                   </div>
                   <p>
-                    {`${comment.content}`}
+                    {`${comment.content} `}
                     {comment.owner.id === user.profile.id?
-                      <button onClick={()=>handleDeleteComment(blog, comment.id, index)}>X</button>
+                      <button onClick={()=>handleDeleteComment(blog, comment.id, index)} style={{color:"red"}}>X</button>
                       :
                       ""
                     }

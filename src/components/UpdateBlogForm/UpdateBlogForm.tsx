@@ -98,7 +98,7 @@ const UpdateBlogForm = (props:UpdateBlogProps): JSX.Element => {
         />
       </div>
       <div className={styles.inputContainer}>
-        <button onClick={()=>handleDeleteBlog(blog.id)}>Delete</button>
+        <button onClick={()=>handleDeleteBlog(blog.id)} style={{color:"red"}}>Delete</button>
         <button 
           disabled={isFormInvalid() || isSubmitted} 
           className={styles.button}
