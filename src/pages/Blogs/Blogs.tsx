@@ -118,7 +118,7 @@ const Blogs = (props:BlogsPageProps): JSX.Element => {
           ""
           }
         </div>
-        <p>{blog.content}</p>
+        <h3>{blog.content}</h3>
         <img src={blog.photo} alt={`${blog.id}'s photo`} />
         {
           blog.likeReceived.length?
@@ -152,7 +152,7 @@ const Blogs = (props:BlogsPageProps): JSX.Element => {
                     </section>
                   </div>
                   <p>
-                    {`: ${comment.content}`}
+                    {`${comment.content}`}
                     {comment.owner.id === user.profile.id?
                       <button onClick={()=>handleDeleteComment(blog, comment.id, index)}>X</button>
                       :
@@ -169,7 +169,6 @@ const Blogs = (props:BlogsPageProps): JSX.Element => {
           </>
           :
           <>
-            <p>You will be the first one comments on this!</p>
             <details id={`comment-${blog.id}`}>
                 <summary>Add Comment</summary>
                 <AddCommentForm blog={blog} blogs={blogs} setBlogs={setBlogs}/>

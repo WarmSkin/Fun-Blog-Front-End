@@ -16,6 +16,7 @@ body {
   --background: #2E5077;
   --border: rgb(220, 220, 220);
   --card-background: #4DA1A9;
+  max-width: 100%;
 }
 
 code {
@@ -29,7 +30,7 @@ main {
   align-items: center;
   margin-top: 80px;
   min-height: calc(100vh - 80px);
-  /* width: 98%; */
+  max-width: 98%;
 }
 
 div#root {
@@ -80,7 +81,6 @@ p {
   font-size: 16px;
   line-height: 28px;
   text-align: justify;
-  text-align-last: center;
 }
 
 a {
@@ -118,9 +118,7 @@ article section {
 article>img {
   max-width: 95%;
   max-height: 80vh;
-  /* height: 80px; */
   object-fit: cover;
-  /* border-radius: 50%; */
   border: 3px solid white;
 }
 
