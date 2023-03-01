@@ -93,7 +93,12 @@ const Blogs = (props:BlogsPageProps): JSX.Element => {
     }
   }
   
-  if(!blogs.length) return <p>No blogs yet</p>
+  if(!blogs.length) 
+    return (
+    <main>
+      <img src="/landing.gif" alt="landingGif" />
+    </main>
+    )
 
   return (
     <main>
