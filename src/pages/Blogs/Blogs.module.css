@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  padding: 0.3rem;
 }
 
 .container * {
@@ -51,9 +52,11 @@
 .comment p {
   width: 180px;
   overflow-wrap: break-word;
-  margin-left: 0.1rem;
-  margin-right: 0.1rem;
-  padding: 5% 5% 5% 5%;
+  /* margin-left: 0.1rem;
+  margin-right: 0.1rem; */
+  padding: 1rem;
+  margin: 1rem;
+  /* padding: 5% 5% 5% 5%; */
   border: 1px solid white;
   border-radius: 20px;
 }
@@ -71,7 +74,6 @@
   }
   .comment {
     width: 100%;
-    justify-content: space-between;
   }
   .comment p {
     width: 165px;
