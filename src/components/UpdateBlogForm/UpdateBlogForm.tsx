@@ -15,12 +15,11 @@ interface UpdateBlogProps {
   blog: Blog;
   blogs: Blog[];
   setBlogs: React.Dispatch<React.SetStateAction<Blog[]>>;
-  handleDeleteBlog: (blogId:number) => void;
 }
 
 
 const UpdateBlogForm = (props:UpdateBlogProps): JSX.Element => {
-  const {blog, blogs, setBlogs, handleDeleteBlog} = props
+  const {blog, blogs, setBlogs} = props
   
   const details = document.getElementById(`update-${blog.id}`)!
 
@@ -38,6 +37,22 @@ const UpdateBlogForm = (props:UpdateBlogProps): JSX.Element => {
 
   const handleChangePhoto = (evt: React.ChangeEvent<HTMLInputElement>) => {
     if (evt.target.files) setPhotoData({ photo: evt.target.files.item(0) })
+  }
+
+  const handleDeleteBlog = async (blogId: number): Promise<void> => {
+    if(isSubmitted) return
+    try {
+      setIsSubmitted(true)
+      await blogService.deleteBlog(blogId)
+      setBlogs(blogs.filter(blog => 
+        blog.id !== blogId
+      ))
+      details.removeAttribute("open")
+      setIsSubmitted(false)
+    } catch (err) {
+      console.log(err)
+      throw err
+    }
   }
 
   const handleSubmit = async (evt: React.FormEvent): Promise<void> => {
@@ -98,7 +113,13 @@ const UpdateBlogForm = (props:UpdateBlogProps): JSX.Element => {
         />
       </div>
       <div className={styles.inputContainer}>
-        <button onClick={()=>handleDeleteBlog(blog.id)} style={{color:"red"}}>Delete</button>
+        <button 
+          onClick={()=>handleDeleteBlog(blog.id)} style={{color:"red"}}
+          disabled={isFormInvalid() || isSubmitted} 
+          className={styles.button}
+        >
+          Delete
+        </button>
         <button 
           disabled={isFormInvalid() || isSubmitted} 
           className={styles.button}

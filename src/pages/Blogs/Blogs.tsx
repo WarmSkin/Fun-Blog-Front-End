@@ -1,6 +1,5 @@
 // npm packages
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 // services
 import * as blogService from '../../services/blogService'
@@ -21,7 +20,6 @@ import styles from './Blogs.module.css'
 
 const Blogs = (props:BlogsPageProps): JSX.Element => {
   const [blogs, setBlogs] = useState<Blog[]>([])
-  const navigate = useNavigate()
 
   const {user} = props
   useEffect((): void => {
@@ -35,19 +33,6 @@ const Blogs = (props:BlogsPageProps): JSX.Element => {
     }
     fetchBlogs()
   }, [])
-
-  const handleDeleteBlog = async (blogId: number): Promise<void> => {
-    try {
-      await blogService.deleteBlog(blogId)
-      setBlogs(blogs.filter(blog => 
-        blog.id !== blogId
-      ))
-      navigate('/blogs')
-    } catch (err) {
-      console.log(err)
-      throw err
-    }
-  }
 
   const handleGiveLike = async (blog: Blog, blogId: number): Promise<void> => {
     try {
@@ -116,7 +101,7 @@ const Blogs = (props:BlogsPageProps): JSX.Element => {
           <div className={styles.blogEdit}>
             <details id={`update-${blog.id}`}>
               <summary>Edit</summary>
-              <UpdateBlogForm blog={blog} blogs={blogs} setBlogs={setBlogs} handleDeleteBlog={handleDeleteBlog}/>
+              <UpdateBlogForm blog={blog} blogs={blogs} setBlogs={setBlogs}/>
             </details>
           </div>
           : 
