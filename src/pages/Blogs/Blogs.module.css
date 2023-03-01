@@ -69,9 +69,6 @@
 }
 
 @media only screen and (max-width: 600px) {
-  .comments {
-    justify-content: left;
-  }
   .container {
     width: 100px;
   }
