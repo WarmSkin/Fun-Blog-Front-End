@@ -72,8 +72,8 @@
   .comments {
     justify-content: left;
   }
-  .comment {
-    width: 100%;
+  .container {
+    width: 100px;
   }
   .comment p {
     width: 165px;
