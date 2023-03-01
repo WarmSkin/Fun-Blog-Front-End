@@ -8,12 +8,16 @@ import * as blogService from '../../services/blogService'
 // components
 import UpdateBlogForm from '../../components/UpdateBlogForm/UpdateBlogForm'
 import AddCommentForm from '../../components/AddCommentForm/AddCommentForm'
+import DateCard from '../../components/DateCard/DateCard'
 
 // types
 import { Blog, User } from '../../types/models'
 interface BlogsPageProps {
   user:User;
 }
+
+// style
+import styles from './Blogs.module.css'
 
 const Blogs = (props:BlogsPageProps): JSX.Element => {
   const [blogs, setBlogs] = useState<Blog[]>([])
@@ -95,22 +99,27 @@ const Blogs = (props:BlogsPageProps): JSX.Element => {
     <main>
       {blogs.map((blog: Blog) =>
       <article key={blog.id}>
-        <div className='blog-header'>
-          <h3>{`${blog.owner.name}:`}</h3>
+        <div className= {styles.blogHeader}>
+          <div className={styles.container}>
+            <img src={blog.owner.photo} alt="The user's avatar" />
+            <section>
+            <h4>{blog.owner.name}</h4>
+            <DateCard createdAt={blog.createdAt} />
+            </section>
+          </div>
           {blog.owner.id === user.profile.id?
-          <>
-            <button onClick={()=>handleDeleteBlog(blog.id)}>X</button>
+          <div className={styles.blogEdit}>
             <details id={`update-${blog.id}`}>
               <summary>Edit</summary>
-              <UpdateBlogForm blog={blog} blogs={blogs} setBlogs={setBlogs}/>
+              <UpdateBlogForm blog={blog} blogs={blogs} setBlogs={setBlogs} handleDeleteBlog={handleDeleteBlog}/>
             </details>
-          </>
+          </div>
           : 
           ""
           }
         </div>
-        <img src={blog.photo} alt={`${blog.id}'s photo`} />
         <p>{blog.content}</p>
+        <img src={blog.photo} alt={`${blog.id}'s photo`} />
         {
           blog.likeReceived.length?
             <>
@@ -132,22 +141,31 @@ const Blogs = (props:BlogsPageProps): JSX.Element => {
         {
           blog.commentReceived.length?
           <>
-            {blog.commentReceived.map((comment,index) =>
-            <>
-            <p>
-              {`${comment.owner.name} : ${comment.content}`}
-              {comment.owner.id === user.profile.id?
-                <button onClick={()=>handleDeleteComment(blog, comment.id, index)}>X</button>
-              :
-                ""
-              }
-            </p> 
-            </>
+            <div className={styles.comments}>
+              {blog.commentReceived.map((comment,index) =>
+                <div className={styles.comment} key={`cc${comment.id}`}>
+                  <div className={styles.container}>
+                    <img src={blog.owner.photo} alt="The user's avatar" />
+                    <section>
+                    <h4>{blog.owner.name}</h4>
+                    <DateCard createdAt={blog.createdAt} />
+                    </section>
+                  </div>
+                  <p>
+                    {`: ${comment.content}`}
+                    {comment.owner.id === user.profile.id?
+                      <button onClick={()=>handleDeleteComment(blog, comment.id, index)}>X</button>
+                      :
+                      ""
+                    }
+                  </p> 
+                </div>
               )}
-              <details id={`comment-${blog.id}`}>
-                <summary>Add Comment</summary>
-                <AddCommentForm blog={blog} blogs={blogs} setBlogs={setBlogs}/>
-              </details>
+            </div>
+            <details id={`comment-${blog.id}`}>
+              <summary>Add Comment</summary>
+              <AddCommentForm blog={blog} blogs={blogs} setBlogs={setBlogs}/>
+            </details>
           </>
           :
           <>

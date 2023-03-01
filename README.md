@@ -1,5 +1,6 @@
 ## Fun-Blog!
-![Landing]() 
+![Landing](./public/landingScreenshot.png) 
+<!-- ![Blogs Page]() -->
 
 Welcome to Fun Blog, the ultimate destination for sharing your most fun and memorable moments with friends and family! With Fun Blog, you can capture your adventures in photos, share them with your social network, and get ready to be showered with likes and comments.
 
@@ -9,7 +10,6 @@ And with the ability to leave comments and engage with other users, Fun Blog is 
 
 So what are you waiting for? Download Fun Blog today and start sharing your fun-filled moments with the world!
 
-![Blogs Page]()
 
 ## [Try it Here](https://fun-blog.netlify.app/) 
 

@@ -1,0 +1,48 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.container * {
+  margin: 0
+}
+
+.container > img {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  margin-right: 12px;
+  border-radius: 50%;
+  background-color: var(--background);
+}
+
+.container h4 {
+  opacity: .75;
+}
+
+.container section {
+  display: flex;
+  flex-direction: column;
+}
+
+.blogHeader {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.blogEdit {
+  display: flex;
+}
+
+.comment {
+  display: flex;
+  margin: 0 2rem;
+}
+
+.comments {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}

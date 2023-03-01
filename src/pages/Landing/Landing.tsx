@@ -13,7 +13,8 @@ const Landing = (props: LandingProps): JSX.Element => {
 
   return (
     <main className={styles.container}>
-      <h1>hello, {user ? user.name : 'friend'}</h1>
+      <h1>{user ? "Share your Fun with us!" : "Welcome to Fun Blog!"}</h1>
+      <img src="/landing.gif" alt="landingGif" />
     </main>
   )
 }

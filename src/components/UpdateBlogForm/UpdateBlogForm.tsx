@@ -15,11 +15,12 @@ interface UpdateBlogProps {
   blog: Blog;
   blogs: Blog[];
   setBlogs: React.Dispatch<React.SetStateAction<Blog[]>>;
+  handleDeleteBlog: (blogId:number) => void;
 }
 
 
 const UpdateBlogForm = (props:UpdateBlogProps): JSX.Element => {
-  const {blog, blogs, setBlogs} = props
+  const {blog, blogs, setBlogs, handleDeleteBlog} = props
   
   const details = document.getElementById(`update-${blog.id}`)!
 
@@ -97,6 +98,7 @@ const UpdateBlogForm = (props:UpdateBlogProps): JSX.Element => {
         />
       </div>
       <div className={styles.inputContainer}>
+        <button onClick={()=>handleDeleteBlog(blog.id)}>Delete</button>
         <button 
           disabled={isFormInvalid() || isSubmitted} 
           className={styles.button}
