@@ -145,10 +145,10 @@ const Blogs = (props:BlogsPageProps): JSX.Element => {
               {blog.commentReceived.map((comment,index) =>
                 <div className={styles.comment} key={`cc${comment.id}`}>
                   <div className={styles.container}>
-                    <img src={blog.owner.photo} alt="The user's avatar" />
+                    <img src={comment.owner.photo} alt="The user's avatar" />
                     <section>
-                    <h4>{blog.owner.name}</h4>
-                    <DateCard createdAt={blog.createdAt} />
+                    <h4>{comment.owner.name}</h4>
+                    <DateCard createdAt={comment.createdAt} />
                     </section>
                   </div>
                   <p>
